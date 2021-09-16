@@ -21,7 +21,7 @@ app.post('/webhook', line.middleware(config), (req, res) => {
     if(req.body.events[0].replyToken === '00000000000000000000000000000000' && req.body.events[1].replyToken === 'ffffffffffffffffffffffffffffffff'){
         res.send('Hello LINE BOT!(POST)');
         console.log('疎通確認用');
-        return; 
+        return;
     }
 
     Promise
@@ -46,8 +46,8 @@ async function handleEvent(event) {
   const price = Number(params[0]);
   const userId = Number(params[1]);
   const what = params[2];
-  
-  const URL = process.env.API_URL + '/payment';
+
+  const URL = process.env.API_URL + 'rooms/' + 'nE4sAx6Xu9FYVyo5LIC3cNG2KMytsABg' + '/payments';
   await axios.post(URL, {
     price: price,
     user_id: userId,
