@@ -47,7 +47,7 @@ async function handleEvent(event) {
   const userId = Number(params[1]);
   const what = params[2];
 
-  const URL = process.env.API_URL + 'rooms/' + 'nE4sAx6Xu9FYVyo5LIC3cNG2KMytsABg' + '/payments';
+  const URL = process.env.API_URL + 'rooms/' + process.env.ROOM_ID + '/payments';
   await axios.post(URL, {
     price: price,
     user_id: userId,
