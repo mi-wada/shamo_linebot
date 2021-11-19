@@ -13,16 +13,8 @@ const config = {
 
 const app = express();
 
-app.get('/', (req, res) => res.send(process.env.MESSAGE)); //ブラウザ確認用(無くても問題ない)
 app.post('/webhook', line.middleware(config), (req, res) => {
     console.log(req.body.events);
-
-    //ここのif分はdeveloper consoleの"接続確認"用なので削除して問題ないです。
-    if(req.body.events[0].replyToken === '00000000000000000000000000000000' && req.body.events[1].replyToken === 'ffffffffffffffffffffffffffffffff'){
-        res.send('Hello LINE BOT!(POST)');
-        console.log('疎通確認用');
-        return;
-    }
 
     Promise
       .all(req.body.events.map(handleEvent))
@@ -54,13 +46,20 @@ async function handleEvent(event) {
     what: what
   },
   {'Content-Type': 'text/plain'})
-  .then(function (response) {console.log('success==========>', response)})
-  .catch(function (response) {console.log('failure==========>',response)})
-
-  return client.replyMessage(event.replyToken, {
-    type: 'text',
-    text: '登録しました' //実際に返信の言葉を入れる箇所
-  });
+  .then(function (response) {
+    console.log('success==========>', response);
+    return client.replyMessage(event.replyToken, {
+      type: 'text',
+      text: '登録しました🐔'
+    });
+  })
+  .catch(function (response) {
+    console.log('failure==========>',response);
+    return client.replyMessage(event.replyToken, {
+      type: 'text',
+      text: '失敗しました🤥'
+    });
+  })
 }
 
 (process.env.NOW_REGION) ? module.exports = app : app.listen(PORT);
