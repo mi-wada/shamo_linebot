@@ -44,10 +44,10 @@ async function handleEvent(event) {
     });
   }
   const price = Number(params[0]);
-  const userId = Number(params[1]);
+  const userId = params[1];
   const what = params[2];
 
-  const URL = process.env.API_URL + 'rooms/' + process.env.ROOM_ID + '/payments';
+  const URL = process.env.API_URL + 'rooms/' + process.env.ROOM + '/payments';
   await axios.post(URL, {
     price: price,
     user_id: userId,
